@@ -13,6 +13,16 @@ class Cart
 		$_SESSION['data'] = $data;
 	}
 
+	private function find($id, $source)
+	{
+		
+		if ($this->exists($id, $source)) {
+			return $source[$id];
+		}
+
+		return NULL;
+	}
+
 	/*
 	*Add item to cart
 	*/
@@ -57,6 +67,18 @@ class Cart
 	}
 
 	/*
+	*Show item from cart
+	*/
+	public function show($id)
+	{
+		if ($this->exists($id, $_SESSION['cart'])) {
+			return $_SESSION['cart'][$id];
+		}
+
+		return NULL;
+	}
+
+	/*
 	*Remove an item from cart
 	*/
 
@@ -65,19 +87,6 @@ class Cart
 		if ($this->exists($id, $_SESSION['cart'])) {
 			unset($_SESSION['cart'][$id]);
 		}
-	}
-
-	/*
-	*Find item by key from data or from cart
-	*/
-	public function find($id, $source)
-	{
-		
-		if ($this->exists($id, $source)) {
-			return $source[$id];
-		}
-
-		return NULL;
 	}
 
 	/*
@@ -134,11 +143,12 @@ class Cart
 		return $sum;
 	}
 
-	/*
-	*Number of items in cart
+	/**
+	*Total number of items in cart
 	*/
 	public function count()
 	{
 		return isset($_SESSION['cart']) ? sizeof($_SESSION['cart']) : 0;
 	}
 }
+
