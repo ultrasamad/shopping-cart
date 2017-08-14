@@ -2,17 +2,27 @@
 A simple shopping cart class implementation in PHP
 
 
-It allows basic operations of a shopping cart; ie **adding**, **removing**, **updating** cart item through its quantity, listing all items in the cart, clearing items in the cart and some other features.
+It allows basic operations of a shopping cart; ie **adding**, **removing**, **updating** cart item through its quantity, **listing all** items in the cart, **clearing items** in the cart as well as calculating total cost of items in the cart.
 
 
 ## Usage
 
-Pull in the Cart.php class and instantiate a cart object passing through the constructor your source data.
+Pull in the Cart.php class and instantiate a cart object passing in your source data.
 At the moment your source data needs to be an array in a certain format which you can easily build on from your data.
 
-You can go through the demo application to see what your source data should conform to.
+``` 
+$data = [
 
-``` $cart = new Cart($sourceData)```
+	'1' => ['id' => 1, 'name' => 'Infinix Hot 4 Pro', 'price' => 465.5, 'stock' => 120, 'image' => 'http://via.placeholder.com/140x100'],
+	'2' => ['id' => 2, 'name' => 'Binatone steel iron', 'price' => 74.0, 'stock' => 350, 'image' => 'http://via.placeholder.com/140x100'],
+	'3' => ['id' => 3, 'name' => 'Brown kaki trouser', 'price' => 65.5, 'stock' => 85, 'image' => 'http://via.placeholder.com/140x100'],
+	'4' => ['id' => 4, 'name' => 'Long sleeve shirt', 'price' => 51.2, 'stock' => 55, 'image' => 'http://via.placeholder.com/140x100'],
+];
+
+$cart = new \Ultrasamad\Cart($data)
+
+```
+You can go through the demo application in the demo folder to see a working sample application.
 
 ## Methods
 
@@ -33,4 +43,22 @@ Methods used by Cart class are pretty self explanatory
 
 ```$cart->all()```
 
-There are some couple of other methods you can use such as ```find($id)``` to retrieve a specific cart item, ```count()``` for returning the total number of cart items, ```sum()``` to find the total cost of items in your cart.  
+### Total number of items in cart
+
+```$cart->count()```
+
+### Show item
+
+```$cart->show($id)```
+
+### Total cost of items
+
+```$cart->sum()```
+
+### Remove item from cart
+
+```$cart->remove($id)```
+
+### Empty cart
+
+```$cart->clear()```
