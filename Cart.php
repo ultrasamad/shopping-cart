@@ -38,14 +38,13 @@ class Cart
 		//Build array format
 		$itemArray = 
 		[
-			$item['id'] =>
-							[
-								'id' => $item['id'],
-								'name' => $item['name'],
-								'price' => $item['price'],
-								'stock' => $item['stock'],
-								'quantity' => $quantity
-							]
+			$item['id'] =>[
+				'id' => $item['id'],
+				'name' => $item['name'],
+				'price' => $item['price'],
+				'stock' => $item['stock'],
+				'quantity' => $quantity
+			]
 		];
 
 
