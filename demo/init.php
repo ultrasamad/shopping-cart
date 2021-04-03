@@ -2,7 +2,7 @@
 session_start();
 
 require_once '../Cart.php';
-use Ultrasamad\Cart;
+use App\Cart;
 
 $data = [
 

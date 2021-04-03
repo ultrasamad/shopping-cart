@@ -34,9 +34,8 @@ switch ($action) {
 
 	default:
 		# code...
-		break;
+	break;
 }
-
 
 ?>
 
@@ -110,10 +109,7 @@ switch ($action) {
 				    	<tbody>
 
 				    		<?php foreach($cart->all() as $item): ?>
-				    		
 				    			<tr>
-
-
 					    			<td><?php echo $item['name']; ?></td>
 					    			<td>‎GH₵  <?php echo $item['price']; ?></td>
 
@@ -130,9 +126,7 @@ switch ($action) {
 					    				<a href="index.php?id=<?php echo $item['id']; ?>&action=remove" class="btn btn-danger">Remove</a>
 					    			</td>
 					    		</tr>
-				    		
 				    		<?php endforeach; ?>
-				    		
 				    	</tbody>
 				    	<tfoot>
 				    		<tr>

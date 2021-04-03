@@ -1,44 +1,55 @@
 <?php 
+
+namespace App; 
 /**
 *@author Ibrahim Samad 
 */
-
-namespace Ultrasamad; 
-
 class Cart
 {
-
-	function __construct(Array $data)
+	/**
+	 * Init session with sample products
+	 *
+	 * @param array $data
+	 */
+	function __construct(array $data)
 	{
 		$_SESSION['data'] = $data;
 	}
 
-	private function find($id, $source)
+	/**
+	 * Find item in cart
+	 *
+	 * @param integer $id
+	 * @param array $source
+	 * @return array|null
+	 */
+	private function find(int $id, array $source): ?array
 	{
-		
 		if ($this->exists($id, $source)) {
 			return $source[$id];
 		}
 
-		return NULL;
+		return null;
 	}
 
-	/*
-	*Add item to cart
-	*/
-	public function add($id, $quantity)
+	/**
+	 * Add item to cart
+	 *
+	 * @param integer $id
+	 * @param integer $quantity
+	 * @return void
+	 */
+	public function add(int $id, int $quantity)
 	{
-
 		if (is_null($this->find($id, $_SESSION['data']))) {
 			return;
 		}
 
 		$item = $this->find($id, $_SESSION['data']);
 
-		//Build array format
 		$itemArray = 
 		[
-			$item['id'] =>[
+			$item['id'] => [
 				'id' => $item['id'],
 				'name' => $item['name'],
 				'price' => $item['price'],
@@ -47,107 +58,115 @@ class Cart
 			]
 		];
 
-
 		if (empty($_SESSION['cart'])) {
-			
 			//First time item in cart no merging required
 			$_SESSION['cart'] = $itemArray;
 		} else{
 
-			//Cart not empty
 			//Check if current item is already in cart
 			if ($this->exists($id, $_SESSION['cart'])) {
 				$_SESSION['cart'][$id]['quantity'] += $quantity;
 			}else{
 				$_SESSION['cart'] = array_replace($_SESSION['cart'], $itemArray);
 			}
-
 		}
 	}
 
-	/*
-	*Show item from cart
-	*/
-	public function show($id)
+	/**
+	 * Show item from cart
+	 *
+	 * @param integer $id
+	 * @return array|null
+	 */
+	public function show(int $id): ?array
 	{
 		if ($this->exists($id, $_SESSION['cart'])) {
 			return $_SESSION['cart'][$id];
 		}
-
-		return NULL;
+		return null;
 	}
 
-	/*
-	*Remove an item from cart
-	*/
-
-	public function remove($id)
+	/**
+	 * Remove item from cart
+	 *
+	 * @param integer $id
+	 * @return void
+	 */
+	public function remove(int $id)
 	{
 		if ($this->exists($id, $_SESSION['cart'])) {
 			unset($_SESSION['cart'][$id]);
 		}
 	}
 
-	/*
-	*All items in cart
-	*/
+	/**
+	 * Get all items in cart
+	 *
+	 * @return array
+	 */
 	public function all()
 	{
-		
-		return isset($_SESSION['cart']) ? $_SESSION['cart'] : NULL;
+		return $_SESSION['cart'] ?? [];
 	}
 
-	/*
-	*Return all items in the cart
-	*/
+	/**
+	 * Remove all items in cart
+	 *
+	 * @return void
+	 */
 	public function clear()
 	{
 		unset($_SESSION['cart']);
 	}
 
-	/*
-	*Update quantity of item in cart
-	*/
-	public function update($id, $quantity)
+	/**
+	 * Update item quantity in cart
+	 *
+	 * @param integer $id
+	 * @param integer $quantity
+	 * @return void
+	 */
+	public function update(int $id, int $quantity)
 	{
 		if (isset($_SESSION['cart'])) {
-
 			$_SESSION['cart'][$id]['quantity'] = $quantity;
 		}
-
-		
 	}
 
-	/*
-	*Determine if an item exists in the data or cart
-	*/
-	private function exists($id, $source)
+	/**
+	 * Determine if item exists
+	 *
+	 * @param integer $id
+	 * @param array $source
+	 * @return boolean
+	 */
+	private function exists(int $id, array $source): bool
 	{
-		if (array_key_exists($id, $source)) {
-			return true;
-		}
-		return false;
+		return array_key_exists($id, $source);
 	}
 
-	/*
-	*Cost of items in cart
-	*/
-	public function sum()
+	/**
+	 * Get total cost of items in cart
+	 *
+	 * @return float
+	 */
+	public function sum(): float
 	{
 		$sum = 0;
 		foreach ($_SESSION['cart'] as $key => $value) {
 			$sum += ($value['price'] * $value['quantity']);
 		}
-
 		return $sum;
 	}
 
 	/**
-	*Total number of items in cart
-	*/
-	public function count()
+	 * Get number of items in cart
+	 *
+	 * @return integer
+	 */
+	public function count(): int
 	{
-		return isset($_SESSION['cart']) ? sizeof($_SESSION['cart']) : 0;
+		return isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 	}
 }
 
