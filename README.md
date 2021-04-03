@@ -19,7 +19,7 @@ $data = [
 	'4' => ['id' => 4, 'name' => 'Long sleeve shirt', 'price' => 51.2, 'stock' => 55, 'image' => 'http://via.placeholder.com/140x100'],
 ];
 
-$cart = new \Ultrasamad\Cart($data)
+$cart = new \App\Cart($data)
 
 ```
 You can go through the demo application in the demo folder to see a working sample application.
