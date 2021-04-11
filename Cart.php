@@ -6,14 +6,15 @@ namespace App;
 */
 class Cart
 {
+	public $products;
 	/**
 	 * Init session with sample products
 	 *
-	 * @param array $data
+	 * @param array $products
 	 */
-	function __construct(array $data)
+	function __construct(array $products)
 	{
-		$_SESSION['data'] = $data;
+		$this->products = $products;
 	}
 
 	/**
@@ -25,11 +26,7 @@ class Cart
 	 */
 	private function find(int $id, array $source): ?array
 	{
-		if ($this->exists($id, $source)) {
-			return $source[$id];
-		}
-
-		return null;
+		return $_SESSION['cart'][$id] ?? null;
 	}
 
 	/**
@@ -39,13 +36,12 @@ class Cart
 	 * @param integer $quantity
 	 * @return void
 	 */
-	public function add(int $id, int $quantity)
+	public function add(int $id, int $quantity = 1)
 	{
-		if (is_null($this->find($id, $_SESSION['data']))) {
-			return;
-		}
 
-		$item = $this->find($id, $_SESSION['data']);
+		$index = array_search($id, array_column($this->products, 'id'));
+		$item = $this->products[$index];
+		if(!$item) return; 
 
 		$itemArray = 
 		[
@@ -53,7 +49,6 @@ class Cart
 				'id' => $item['id'],
 				'name' => $item['name'],
 				'price' => $item['price'],
-				'stock' => $item['stock'],
 				'quantity' => $quantity
 			]
 		];
@@ -63,27 +58,13 @@ class Cart
 			$_SESSION['cart'] = $itemArray;
 		} else{
 
-			//Check if current item is already in cart
-			if ($this->exists($id, $_SESSION['cart'])) {
+			//If item already exists in cart
+			if(array_key_exists($id, $_SESSION['cart'])){
 				$_SESSION['cart'][$id]['quantity'] += $quantity;
 			}else{
 				$_SESSION['cart'] = array_replace($_SESSION['cart'], $itemArray);
 			}
 		}
-	}
-
-	/**
-	 * Show item from cart
-	 *
-	 * @param integer $id
-	 * @return array|null
-	 */
-	public function show(int $id): ?array
-	{
-		if ($this->exists($id, $_SESSION['cart'])) {
-			return $_SESSION['cart'][$id];
-		}
-		return null;
 	}
 
 	/**
@@ -94,9 +75,7 @@ class Cart
 	 */
 	public function remove(int $id)
 	{
-		if ($this->exists($id, $_SESSION['cart'])) {
-			unset($_SESSION['cart'][$id]);
-		}
+		unset($_SESSION['cart'][$id]);
 	}
 
 	/**
@@ -131,18 +110,6 @@ class Cart
 		if (isset($_SESSION['cart'])) {
 			$_SESSION['cart'][$id]['quantity'] = $quantity;
 		}
-	}
-
-	/**
-	 * Determine if item exists
-	 *
-	 * @param integer $id
-	 * @param array $source
-	 * @return boolean
-	 */
-	private function exists(int $id, array $source): bool
-	{
-		return array_key_exists($id, $source);
 	}
 
 	/**

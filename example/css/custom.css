@@ -1,0 +1,23 @@
+.product-image {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    border-radius: .75rem;
+  }
+  .product-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .product-link:hover {
+      text-decoration: underline;
+  }
+
+  .cart-link:hover {
+    color: blue;
+  }
