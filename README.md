@@ -7,8 +7,8 @@ It allows basic operations of a shopping cart; ie **adding**, **removing**, **up
 
 ## Usage
 
-Pull in the Cart.php class and instantiate a cart object passing in your source data.
-Your source data needs to be an array in a certain format which you can easily build on from your data.
+Instantiate a Cart object passing in your source data.
+In a real application, you won't be passing data to the cart though. And in that case the constructor will not be needed.
 
 ``` 
 $products = [
@@ -16,7 +16,7 @@ $products = [
 		'id' => 1, 
 		'name' => 'Smart Watch', 
 		'price' => 45,  
-		'description' => 'This Fitness Bracelet has a high sensitive touch screen and can achieve various operations, information content'
+		'description' => 'This Fitness Bracelet has a high sensitive touch screen'
 	],
 	...
 ];
@@ -24,7 +24,7 @@ $products = [
 $cart = new \App\Cart($products)
 
 ```
-To test the sample application built with this class, clone the repository and run:
+To test the sample application built with this class, clone the repository and run:\
 `php -S localhost:8000 -t examples`
 
 ## Methods
