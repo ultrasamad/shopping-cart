@@ -16,8 +16,11 @@
         <div class="pb-2 border-bottom d-flex justify-content-between align-items-center">
             <h2>My Cart</h2>
             <a href="cart.php" class="cart-link text-decoration-none link-dark fw-bold position-relative">
-                <i class="bi bi-cart3"></i>Cart
+                <i class="bi bi-cart3"></i>
+                Cart
+                <?php if($cart->count() > 0): ?>
                 <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><?= $cart->count(); ?></span>
+                <?php endif; ?>
             </a>
         </div>
         <?php if($cart->count() > 0): ?>
@@ -33,7 +36,7 @@
         <div class="mt-2 d-flex justify-content-between bg-light">
             <div class="p-2 w-50 border-end">
                 <h5><?= $item['name']; ?></h5>
-                <a href="/cart-actions.php?action=remove&id=<?= $item['id']; ?>" class="text-decoration-none">
+                <a href="/cart-actions.php?action=remove&id=<?= $item['id']; ?>" class="text-decoration-none text-warning">
                     <i class="bi bi-trash"></i>
                     Remove
                 </a>
@@ -47,6 +50,7 @@
         <?php else: ?>
         <div class="mt-4">
             <h4 class="text-center">Your cart is empty!</h4>
+            <a href="/" class="btn btn-outline-primary">Start shopping</a>
         </div>
         <?php endif; ?>
     </div>

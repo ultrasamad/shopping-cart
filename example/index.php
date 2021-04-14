@@ -18,7 +18,10 @@
             <h2>Products in Stock</h2>
             <a href="cart.php" class="cart-link text-decoration-none link-dark fw-bold position-relative">
                 <i class="bi bi-cart3"></i>
-                Cart<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><?= $cart->count(); ?></span>
+                Cart
+                <?php if($cart->count() > 0): ?>
+                <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><?= $cart->count(); ?></span>
+                <?php endif; ?>
             </a>
         </div>
         <div class="row g-5 py-5">
