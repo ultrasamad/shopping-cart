@@ -17,7 +17,7 @@
             <h2>My Cart</h2>
             <a href="cart.php" class="cart-link text-decoration-none link-dark fw-bold position-relative">
                 <i class="bi bi-cart3"></i>Cart
-                <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><?php echo $cart->count(); ?></span>
+                <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><?= $cart->count(); ?></span>
             </a>
         </div>
         <?php if($cart->count() > 0): ?>
@@ -32,18 +32,18 @@
         <?php foreach($cart->all() as $item): ?>
         <div class="mt-2 d-flex justify-content-between bg-light">
             <div class="p-2 w-50 border-end">
-                <h5><?php echo $item['name']; ?></h5>
-                <a href="/cart-actions.php?action=remove&id=<?php echo $item['id']; ?>" class="text-decoration-none">
+                <h5><?= $item['name']; ?></h5>
+                <a href="/cart-actions.php?action=remove&id=<?= $item['id']; ?>" class="text-decoration-none">
                     <i class="bi bi-trash"></i>
                     Remove
                 </a>
             </div>
-            <div class="p-2 border-end"><?php echo $item['quantity']; ?></div>
-            <div class="p-2 border-end fw-bold">GH¢<?php echo number_format($item['price'], 2); ?></div>
-            <div class="p-2 border-end fw-bold">GH¢<?php echo number_format(($item['price'] * $item['quantity']), 2); ?></div>
+            <div class="p-2 border-end"><?= $item['quantity']; ?></div>
+            <div class="p-2 border-end fw-bold">GH¢<?= number_format($item['price'], 2); ?></div>
+            <div class="p-2 border-end fw-bold">GH¢<?= number_format(($item['price'] * $item['quantity']), 2); ?></div>
         </div>
         <?php endforeach; ?>
-        <h3 class="mt-3 float-end">Total: GH¢<?php echo number_format($cart->sum(), 2); ?></h3>
+        <h3 class="mt-3 float-end">Total: GH¢<?= number_format($cart->sum(), 2); ?></h3>
         <?php else: ?>
         <div class="mt-4">
             <h4 class="text-center">Your cart is empty!</h4>

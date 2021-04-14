@@ -18,19 +18,19 @@
             <h2>Products in Stock</h2>
             <a href="cart.php" class="cart-link text-decoration-none link-dark fw-bold position-relative">
                 <i class="bi bi-cart3"></i>
-                Cart<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><?php echo $cart->count(); ?></span>
+                Cart<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><?= $cart->count(); ?></span>
             </a>
         </div>
         <div class="row g-5 py-5">
           <?php foreach($products as $product): ?>
           <div class="feature col-md-4">
             <div class="product-image">
-                <img src="<?php echo $product['image_url']; ?>" class="img-thumbnail" alt="Product Image">
+                <img src="<?= $product['image_url']; ?>" class="img-thumbnail" alt="Product Image">
             </div>
-            <h2 class="fw-light"><?php echo $product['name']; ?></h2>
-            <p><?php echo $product['description']; ?></p>
-            <h5>GH¢<?php echo number_format($product['price'], 2); ?></h5>
-            <a href="cart-actions.php?action=add&id=<?php echo $product['id'] ?>" class="product-link">
+            <h2 class="fw-light"><?= $product['name']; ?></h2>
+            <p><?= $product['description']; ?></p>
+            <h5>GH¢<?= number_format($product['price'], 2); ?></h5>
+            <a href="cart-actions.php?action=add&id=<?= $product['id'] ?>" class="product-link">
               <span>Add to cart<span>
               <i class="bi bi-chevron-double-right"></i>
             </a>
