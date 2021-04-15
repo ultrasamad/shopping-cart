@@ -8,8 +8,8 @@ class Cart
 {
 	private $storage;
 	/**
-	 * Init session with sample products
-	 *
+	 *Create a new instance
+	 * 
 	 * @param array $products
 	 */
 	function __construct(StorageInterface $storage)
