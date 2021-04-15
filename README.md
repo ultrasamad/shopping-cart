@@ -27,6 +27,12 @@ $cart = new \App\Cart($products)
 To test the sample application built with this class, clone the repository and run:\
 `php -S localhost:8000 -t examples`
 
+
+![PHP Shopping Cart](example/screenshots/product-listing.PNG)
+
+## Cart page
+![PHP Shopping Cart](example/screenshots/cart-page.PNG)
+
 ## Methods
 
 Methods used by Cart class are pretty self explanatory
