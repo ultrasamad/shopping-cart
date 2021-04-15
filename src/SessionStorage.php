@@ -12,29 +12,28 @@ class SessionStorage implements StorageInterface
      */
     public function add(array $item, $quantity = 1): void
     {
-		$itemArray = 
-		[
-			$item['id'] => [
-				'id' => $item['id'],
-				'name' => $item['name'],
-				'price' => $item['price'],
-				'quantity' => $quantity
-			]
-		];
+      $itemArray = [
+        $item['id'] => [
+          'id' => $item['id'],
+          'name' => $item['name'],
+          'price' => $item['price'],
+          'quantity' => $quantity
+        ]
+      ];
 
-		if (empty($_SESSION['cart'])) {
-			//First time item in cart no merging required
-			$_SESSION['cart'] = $itemArray;
-		} else{
+      if (empty($_SESSION['cart'])) {
+        //First time item in cart no merging required
+        $_SESSION['cart'] = $itemArray;
+      } else{
 
-			//If item already exists in cart
-            $id = $item['id'];
-			if(array_key_exists($id, $_SESSION['cart'])){
-				$_SESSION['cart'][$id]['quantity'] += $quantity;
-			}else{
-				$_SESSION['cart'] = array_replace($_SESSION['cart'], $itemArray);
-			}
-		}
+        //If item already exists in cart
+        $id = $item['id'];
+        if(array_key_exists($id, $_SESSION['cart'])){
+          $_SESSION['cart'][$id]['quantity'] += $quantity;
+        }else{
+          $_SESSION['cart'] = array_replace($_SESSION['cart'], $itemArray);
+        }
+      }
     }
 
     /**
@@ -45,7 +44,7 @@ class SessionStorage implements StorageInterface
      */
     public function remove(int $id): void
     {
-		unset($_SESSION['cart'][$id]);
+		  unset($_SESSION['cart'][$id]);
     }
 
     /**
@@ -57,7 +56,7 @@ class SessionStorage implements StorageInterface
      */
     public function update(int $id, int $quantity): void
     {
-		$_SESSION['cart'][$id]['quantity'] = $quantity;
+		  $_SESSION['cart'][$id]['quantity'] = $quantity;
     }
 
     /**
@@ -77,11 +76,11 @@ class SessionStorage implements StorageInterface
      */
     public function sum(): float
     {
-        $sum = 0;
-		foreach ($_SESSION['cart'] as $item) {
-			$sum += ($item['price'] * $item['quantity']);
-		}
-		return $sum;
+      $sum = 0;
+      foreach ($_SESSION['cart'] as $item) {
+        $sum += ($item['price'] * $item['quantity']);
+      }
+      return $sum;
     }
 
     /**
@@ -91,7 +90,7 @@ class SessionStorage implements StorageInterface
      */
     public function count(): int
     {
-		return isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+		  return isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
     }
 
     /**
@@ -101,6 +100,6 @@ class SessionStorage implements StorageInterface
      */
     public function clear(): void
     {
-		$_SESSION['cart'] = [];
+		  $_SESSION['cart'] = [];
     }
 }
