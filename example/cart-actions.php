@@ -6,17 +6,21 @@ $action = $query['action'] ?? null;
 $productId = $query['id'] ?? null;
 $quantity = $query['quantity'] ?? null;
 
+//Find item from products store
+$index = array_search($productId, array_column($products, 'id'));
+$item = $products[$index];
+
 if (in_array($action, ['add', 'update', 'remove']) && $productId) {
 
     switch ($action) {
         case 'add':
-            $cart->add($productId);
+            $cart->addItem($item);
             break;
         case 'update': 
-            $cart->update($productId, $quantity);
+            $cart->updateItem($productId, $quantity);
             break;
         case 'remove':
-            $cart->remove($productId);
+            $cart->removeItem($productId);
             break;
         default:
             //

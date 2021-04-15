@@ -6,65 +6,27 @@ namespace App;
 */
 class Cart
 {
-	public $products;
+	private $storage;
 	/**
 	 * Init session with sample products
 	 *
 	 * @param array $products
 	 */
-	function __construct(array $products)
+	function __construct(StorageInterface $storage)
 	{
-		$this->products = $products;
-	}
-
-	/**
-	 * Find item in cart
-	 *
-	 * @param integer $id
-	 * @param array $source
-	 * @return array|null
-	 */
-	private function find(int $id, array $source): ?array
-	{
-		return $_SESSION['cart'][$id] ?? null;
+		$this->storage = $storage;
 	}
 
 	/**
 	 * Add item to cart
 	 *
-	 * @param integer $id
+	 * @param array $item
 	 * @param integer $quantity
 	 * @return void
 	 */
-	public function add(int $id, int $quantity = 1)
+	public function addItem(array $item, int $quantity = 1)
 	{
-
-		$index = array_search($id, array_column($this->products, 'id'));
-		$item = $this->products[$index];
-		if(!$item) return; 
-
-		$itemArray = 
-		[
-			$item['id'] => [
-				'id' => $item['id'],
-				'name' => $item['name'],
-				'price' => $item['price'],
-				'quantity' => $quantity
-			]
-		];
-
-		if (empty($_SESSION['cart'])) {
-			//First time item in cart no merging required
-			$_SESSION['cart'] = $itemArray;
-		} else{
-
-			//If item already exists in cart
-			if(array_key_exists($id, $_SESSION['cart'])){
-				$_SESSION['cart'][$id]['quantity'] += $quantity;
-			}else{
-				$_SESSION['cart'] = array_replace($_SESSION['cart'], $itemArray);
-			}
-		}
+		$this->storage->add($item, $quantity);
 	}
 
 	/**
@@ -73,9 +35,9 @@ class Cart
 	 * @param integer $id
 	 * @return void
 	 */
-	public function remove(int $id)
+	public function removeItem(int $id)
 	{
-		unset($_SESSION['cart'][$id]);
+		$this->storage->remove($id);
 	}
 
 	/**
@@ -83,9 +45,9 @@ class Cart
 	 *
 	 * @return array
 	 */
-	public function all()
+	public function getItems(): array
 	{
-		return $_SESSION['cart'] ?? [];
+		return $this->storage->all();
 	}
 
 	/**
@@ -93,9 +55,9 @@ class Cart
 	 *
 	 * @return void
 	 */
-	public function clear()
+	public function clearItems()
 	{
-		unset($_SESSION['cart']);
+		$this->storage->clear();
 	}
 
 	/**
@@ -105,11 +67,9 @@ class Cart
 	 * @param integer $quantity
 	 * @return void
 	 */
-	public function update(int $id, int $quantity)
+	public function updateItem(int $id, int $quantity)
 	{
-		if (isset($_SESSION['cart'])) {
-			$_SESSION['cart'][$id]['quantity'] = $quantity;
-		}
+		$this->storage->update($id, $quantity);
 	}
 
 	/**
@@ -117,13 +77,9 @@ class Cart
 	 *
 	 * @return float
 	 */
-	public function sum(): float
+	public function sumItems(): float
 	{
-		$sum = 0;
-		foreach ($_SESSION['cart'] as $key => $value) {
-			$sum += ($value['price'] * $value['quantity']);
-		}
-		return $sum;
+		return $this->storage->sum();
 	}
 
 	/**
@@ -131,9 +87,9 @@ class Cart
 	 *
 	 * @return integer
 	 */
-	public function count(): int
+	public function countItems(): int
 	{
-		return isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+		return $this->storage->count();
 	}
 }
 

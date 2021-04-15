@@ -3,6 +3,8 @@ session_start();
 
 require_once '../vendor/autoload.php';
 use App\Cart;
+use App\SessionStorage;
 
 $products = require_once 'datastore.php';
-$cart = new Cart($products);
+$storage = new SessionStorage;
+$cart = new Cart($storage);
